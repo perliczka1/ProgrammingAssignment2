@@ -1,8 +1,8 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Functions can be used to create vector-like object 
+## in order to calculate and then store its inverse
 
-## Write a short comment describing this function
-
+## Function creates all necessary functions and
+## sets up the environment to store matrix x and its inverse
 makeCacheMatrix <- function(x = matrix()) {
   inv <- NULL
   set <- function(y) {
@@ -11,7 +11,7 @@ makeCacheMatrix <- function(x = matrix()) {
   }
   get <- function() x
   setInv <- function(i) inv <<- i
-  getIvn <- function() inv
+  getInv <- function() inv
   
   list(set = set, get = get,
   setInv = setInv,
@@ -19,9 +19,15 @@ makeCacheMatrix <- function(x = matrix()) {
   
 }
 
-
-## Write a short comment describing this function
-
+## Function returns a matrix that is the inverse of 'x'
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  i <- x$getInv()
+  if(!is.null(i)) {
+    message("getting cached data")
+    return(i)
+  }
+  xMatrix = x$get()
+  i = solve(xMatrix, ...)
+  x$setInv(i)
+  i
 }
